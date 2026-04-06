@@ -18,7 +18,6 @@ FROM dbo.olist_orders_dataset od LEFT JOIN dbo.olist_order_items_dataset oi
 ON od.order_id = oi.order_id
 WHERE od.order_status != 'canceled' AND od.order_status != 'unavailable'
 GROUP BY MONTH(od.order_purchase_timestamp), YEAR(od.order_purchase_timestamp))
-
 SELECT month, s.total_price_of_month, prev_price, (s.total_price_of_month - s.prev_price) * 1.0/s.prev_price AS growwth_rate
 FROM(
 SELECT t.month, t.year, t.total_price_of_month, LAG(t.total_price_of_month) OVER (ORDER BY t.month, t.year) AS prev_price
